@@ -14,22 +14,18 @@ public class ThreadedEchoServer implements Runnable {
 
     public static void main(String args[]) throws IOException {
         ServerSocket serv = new ServerSocket(PORT);
-        System.out.println(serv.getLocalSocketAddress());
-
         while (true) {
             Socket sock = serv.accept();
             ThreadedEchoServer server = new ThreadedEchoServer(sock);
-
             Thread t = new Thread(server);
             t.start();
         }
     }
-
     public void run() {
         try {
-            BufferedReader brd = new BufferedReader(new InputStreamReader(sock.getInputStream(), "UTF-8"));
+            BufferedReader brd = new BufferedReader(new InputStreamReader(sock.getInputStream(), "UTF-16"));
             String s = brd.readLine();
-            PrintWriter prw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream(), "UTF-8"));
+            PrintWriter prw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream(), "UTF-16"));
             prw.print(s);
             prw.println(s);
             prw.flush();
