@@ -38,8 +38,6 @@ public class ThreadedEchoServer implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 }
