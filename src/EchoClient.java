@@ -15,13 +15,13 @@ public class EchoClient {
     private Reader rd;
     private BufferedReader brd;
 
-    public EchoClient(String name) throws IOException {
-        this.user = name;
-        this.socket = new Socket("localhost", 7777);
+    public EchoClient() throws IOException {
     }
 
-    public void login() {
+    public void login(String name) {
         try {
+            this.user = name;
+            this.socket = new Socket("localhost", 7777);
             //apro un canale e mando un messaggio al server
             os = socket.getOutputStream();
             wr = new OutputStreamWriter(os, StandardCharsets.UTF_16);
@@ -33,12 +33,18 @@ public class EchoClient {
             brd = new BufferedReader(rd);
             String answer = brd.readLine();
             if (answer.equalsIgnoreCase("ack")) {
-                System.out.println("utente "+user+" aggiunto");
+                System.out.println("utente " + user + " aggiunto");
+
                 //autenticazione effettuata aprire nuovo panel con interfaccia per chattare
-            } else {
+            } else if (answer.equalsIgnoreCase("nack")) {
                 //stampa "nome utente già utilizzato"
-                System.out.println("utente "+user+" non aggiunto");
+                System.out.println("utente " + user + " non aggiunto");
                 socket.close();
+            }else{
+                while(!answer.contains("<logout>")){
+                    System.out.println(receiveMessage());
+                }
+                logout();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,6 +64,11 @@ public class EchoClient {
     public void logout() {
         //close connection
         try {
+            os = socket.getOutputStream();
+            wr = new OutputStreamWriter(os, StandardCharsets.UTF_16);
+            prw = new PrintWriter(wr);
+            prw.println("<logout>" + user);
+            prw.flush();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,7 +78,6 @@ public class EchoClient {
     public void sendMassege(String userReceiver, String msg) {
         // if receiver=="broadcast" massage will send to all users
         // else to the receiver specified by name of user.
-        OutputStream os = null;
         try {
             os = socket.getOutputStream();
         } catch (IOException e) {
@@ -75,5 +85,6 @@ public class EchoClient {
         }
         prw.println(userReceiver + "-" + msg);
         prw.flush();
+        System.out.println(receiveMessage());
     }
 }

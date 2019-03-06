@@ -1,16 +1,20 @@
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 
 public class ThreadedEchoServer implements Runnable {
     public static final int PORT = 7777;
+    private HashMap<String, Socket> listUser;
+
 
     private Socket sock;
 
-    public ThreadedEchoServer(Socket s) {
+    public ThreadedEchoServer(Socket s, HashMap users) {
         System.out.println("nuova richiesta");
-        sock = s;
+        this.sock = s;
+        listUser = users;
         System.out.println(s.getInetAddress());
     }
 
@@ -24,6 +28,7 @@ public class ThreadedEchoServer implements Runnable {
 //        }
 //    }
     public void run() {
+        String s = null;
         while (true) {
             BufferedReader brd = null;
             try {
@@ -31,7 +36,6 @@ public class ThreadedEchoServer implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String s = null;
             try {
                 s = brd.readLine();
             } catch (IOException e) {
@@ -44,14 +48,57 @@ public class ThreadedEchoServer implements Runnable {
                 e.printStackTrace();
             }
 //            controlla se l'username è già utilizzato
-            if (s.contains("<login>")) {
-                prw.println("ack");
-            } else {
+            if (s != null) {
+                if (s.contains("<login>")) {
+                    //sinc list
+                    s = s.replace("<login>", "");
+                    if (!listUser.containsKey(s)) {
+                        listUser.put(s, sock);
+                        prw.println("ack");
+                    } else {
+                        prw.println("nack");
+//                        try {
+//                            this.sock.close();
+//                            Thread.currentThread().interrupt();
+//                            return;
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+                } else if (s.contains("<logout>")) {
+                    //sinc list
+                    s = s.replace("<logout>", "");
+                    listUser.remove(s);
+                    Thread.currentThread().interrupt();
+                    return;
+
+                } else {
 //                user già connesso
-                System.out.println(s);
-                prw.println(s);
+                    String[] msg = s.split("-");
+                    if (msg[0].equalsIgnoreCase("broadcast")) {
+                        prw.println(msg[1]);
+//                        for (String user : listUser.keySet()) {
+//                            try {
+//                                prw = new PrintWriter(new OutputStreamWriter(listUser.get(user).getOutputStream(), StandardCharsets.UTF_16));
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                            prw.println(msg[1]);
+//                            prw.flush();
+//                        }
+                    } else {
+                        try {
+                            prw = new PrintWriter(new OutputStreamWriter(listUser.get(msg[0]).getOutputStream(), StandardCharsets.UTF_16));
+                            prw.println(msg[1]);
+                            prw.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.println(s);
+                }
+                prw.flush();
             }
-            prw.flush();
         }
     }
 //        finally {
