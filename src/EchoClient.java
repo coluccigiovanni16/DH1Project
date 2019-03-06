@@ -40,18 +40,13 @@ public class EchoClient {
                 //stampa "nome utente già utilizzato"
                 System.out.println("utente " + user + " non aggiunto");
                 socket.close();
-            }else{
-                while(!answer.contains("<logout>")){
-                    System.out.println(receiveMessage());
-                }
-                logout();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private String receiveMessage() {
+    public String receiveMessage() {
         String answer = "";
         try {
             answer = brd.readLine();
@@ -85,6 +80,5 @@ public class EchoClient {
         }
         prw.println(userReceiver + "-" + msg);
         prw.flush();
-        System.out.println(receiveMessage());
     }
 }
