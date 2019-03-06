@@ -8,35 +8,36 @@ public class EchoClient {
 
     private String user;
     private Socket socket;
+    private OutputStream os;
+    private Writer wr;
+    private PrintWriter prw;
+    private InputStream is;
+    private Reader rd;
+    private BufferedReader brd;
 
-    public EchoClient() {
-
+    public EchoClient(String name) throws IOException {
+        this.user = name;
+        this.socket = new Socket("localhost", 7777);
     }
 
-    public void login(String name) {
-        user = name;
+    public void login() {
         try {
-            socket = new Socket("localhost", PORT);
             //apro un canale e mando un messaggio al server
-            OutputStream os = socket.getOutputStream();
-            Writer wr = new OutputStreamWriter(os, StandardCharsets.UTF_16);
-            PrintWriter prw = new PrintWriter(wr);
-            prw.println(user);
+            os = socket.getOutputStream();
+            wr = new OutputStreamWriter(os, StandardCharsets.UTF_16);
+            prw = new PrintWriter(wr);
+            prw.println("<login>" + user);
             prw.flush();
-            InputStream is = socket.getInputStream();
-            Reader rd = new InputStreamReader(is, StandardCharsets.UTF_16);
-            BufferedReader brd = new BufferedReader(rd);
+            is = socket.getInputStream();
+            rd = new InputStreamReader(is, StandardCharsets.UTF_16);
+            brd = new BufferedReader(rd);
             String answer = brd.readLine();
             if (answer.equalsIgnoreCase("ack")) {
-                while (true) {
-                    String receivedFromServer = receiveMessage();
-                    if (!receivedFromServer.isEmpty()) {
-                        System.out.println(receiveMessage());
-                    }
-                }
+                System.out.println("utente "+user+" aggiunto");
                 //autenticazione effettuata aprire nuovo panel con interfaccia per chattare
             } else {
                 //stampa "nome utente già utilizzato"
+                System.out.println("utente "+user+" non aggiunto");
                 socket.close();
             }
         } catch (IOException e) {
@@ -45,15 +46,7 @@ public class EchoClient {
     }
 
     private String receiveMessage() {
-        InputStream is = null;
-        String answer = null;
-        try {
-            is = socket.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Reader rd = new InputStreamReader(is, StandardCharsets.UTF_16);
-        BufferedReader brd = new BufferedReader(rd);
+        String answer = "";
         try {
             answer = brd.readLine();
         } catch (IOException e) {
@@ -80,9 +73,7 @@ public class EchoClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Writer wr = new OutputStreamWriter(os, StandardCharsets.UTF_16);
-        PrintWriter prw = new PrintWriter(wr);
-        prw.println(user);
+        prw.println(userReceiver + "-" + msg);
         prw.flush();
     }
 }
