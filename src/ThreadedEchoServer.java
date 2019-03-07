@@ -30,7 +30,7 @@ public class ThreadedEchoServer implements Runnable {
     public void run() {
         String s = null;
         while (true) {
-            sendUpdateListUser();
+            //sendUpdateListUser();
             BufferedReader brd = null;
                 try {
                     brd = new BufferedReader(new InputStreamReader(sock.getInputStream(), StandardCharsets.UTF_16));
@@ -48,6 +48,7 @@ public class ThreadedEchoServer implements Runnable {
             if (s != null) {
                 if (s.contains("<login>")) {
                     //sinc list
+                    synchronized (listUser){
                     s = s.replace("<login>", "");
                     if (!listUser.containsKey(s)) {
                         listUser.put(s, sock);
@@ -64,23 +65,26 @@ public class ThreadedEchoServer implements Runnable {
 //                        } catch (IOException e) {
 //                            e.printStackTrace();
 //                        }
-                    }
+                    }}
                 } else if (s.contains("<logout>")) {
                     //sinc list
-                    s = s.replace("<logout>", "");
-                    listUser.remove(s);
-                    sendUpdateListUser();
-                    try {
-                        sock.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    synchronized (listUser) {
+                        s = s.replace("<logout>", "");
+                        listUser.remove(s);
+                        sendUpdateListUser();
+                        try {
+                            sock.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Thread.currentThread().interrupt();
+                        return;
                     }
-                    Thread.currentThread().interrupt();
-                    return;
-
                 } else {
 //                user già connesso
                     String[] msg = s.split("-");
+                    synchronized (listUser){
+                        System.out.println(listUser.keySet());
                     if (msg[0].equalsIgnoreCase("broadcast")) {
                         for (String user : listUser.keySet()) {
                             try {
@@ -100,7 +104,7 @@ public class ThreadedEchoServer implements Runnable {
                             e.printStackTrace();
                         }
                     }
-                    System.out.println(s);
+                    System.out.println(s);}
                 }
 
             }

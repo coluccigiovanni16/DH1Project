@@ -14,6 +14,7 @@ public class EchoClient {
     private InputStream is;
     private Reader rd;
     private BufferedReader brd;
+    private Thread t;
 
     public EchoClient() throws IOException {
     }
@@ -34,8 +35,11 @@ public class EchoClient {
             String answer = brd.readLine();
             if (answer.equalsIgnoreCase("ack")) {
                 System.out.println("utente " + user + " aggiunto");
-
                 //autenticazione effettuata aprire nuovo panel con interfaccia per chattare
+                //avvio thread ascolto
+                ThreadedEchoClient client= new ThreadedEchoClient(socket);
+                t = new Thread(client);
+                t.start();
             } else if (answer.equalsIgnoreCase("nack")) {
                 //stampa "nome utente già utilizzato"
                 System.out.println("utente " + user + " non aggiunto");
@@ -64,6 +68,7 @@ public class EchoClient {
             prw = new PrintWriter(wr);
             prw.println("<logout>" + user);
             prw.flush();
+            t.stop();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,7 +83,7 @@ public class EchoClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        prw.println(userReceiver + "-" + msg);
+        prw.println(userReceiver + "-" +user+": "+ msg);
         prw.flush();
     }
 }
