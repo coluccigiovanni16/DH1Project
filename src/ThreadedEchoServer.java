@@ -30,6 +30,7 @@ public class ThreadedEchoServer implements Runnable {
     public void run() {
         String s = null;
         while (true) {
+            sendUpdateListUser();
             BufferedReader brd = null;
                 try {
                     brd = new BufferedReader(new InputStreamReader(sock.getInputStream(), StandardCharsets.UTF_16));
@@ -52,6 +53,7 @@ public class ThreadedEchoServer implements Runnable {
                         listUser.put(s, sock);
                         prw.println("ack");
                         prw.flush();
+                        sendUpdateListUser();
                     } else {
                         prw.println("nack");
                         prw.flush();
@@ -67,6 +69,7 @@ public class ThreadedEchoServer implements Runnable {
                     //sinc list
                     s = s.replace("<logout>", "");
                     listUser.remove(s);
+                    sendUpdateListUser();
                     try {
                         sock.close();
                     } catch (IOException e) {
@@ -102,6 +105,24 @@ public class ThreadedEchoServer implements Runnable {
 
             }
         }
+    }
+
+    private void sendUpdateListUser() {
+        String users="updateuser-";
+        PrintWriter prw =null;
+        for (String user : listUser.keySet()) {
+            users=users+user+"-";
+        }
+        for (String user : listUser.keySet()) {
+            try {
+                prw = new PrintWriter(new OutputStreamWriter(listUser.get(user).getOutputStream(), StandardCharsets.UTF_16));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            prw.println(users);
+            prw.flush();
+        }
+        System.out.println(users);
     }
 //        finally {
 //            try {
