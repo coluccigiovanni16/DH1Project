@@ -2,21 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b15f69b3-ada9-44bf-be79-d992a481d0e3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DH1Project/EchoClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DH1Project/EchoClient.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/DH1Project/ThreadedEchoClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DH1Project/ThreadedEchoClient.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/DH1Project/ThreadedEchoServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DH1Project/ThreadedEchoServer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/DH1Project/chat.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DH1Project/chat.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DH1Project/client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DH1Project/client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DH1Project/provaclient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DH1Project/provaclient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DH1Project/provaserver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DH1Project/provaserver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EchoClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EchoClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DH1Project/client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EchoClient.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ThreadedEchoClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ThreadedEchoClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ThreadedEchoServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ThreadedEchoServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chat.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/provaclient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/provaclient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,6 +41,18 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/provaserver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="51" selection-start-line="12" selection-start-column="51" selection-end-line="12" selection-end-column="51" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/provaclient.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
@@ -56,23 +64,25 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="81" column="57" selection-start-line="81" selection-start-column="57" selection-end-line="81" selection-end-column="57" />
+            <state relative-caret-position="1267">
+              <caret line="106" column="102" selection-start-line="106" selection-start-column="102" selection-end-line="106" selection-end-column="102" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1738#1739#0" expanded="true" />
-                <element signature="e#2715#2950#0" expanded="true" />
-                <element signature="e#2949#2950#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/provaserver.java">
+        <entry file="file://$PROJECT_DIR$/src/chat.form">
+          <provider selected="true" editor-type-id="ui-designer" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ThreadedEchoClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="59" lean-forward="true" selection-start-line="12" selection-start-column="59" selection-end-line="12" selection-end-column="59" />
+            <state relative-caret-position="400">
+              <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -81,31 +91,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ThreadedEchoClient.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="43" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/EchoClient.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="46" column="15" lean-forward="true" selection-start-column="2" selection-end-line="88" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ThreadedEchoServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1268">
-              <caret line="134" selection-start-line="134" selection-end-line="134" />
+            <state relative-caret-position="442">
+              <caret line="111" column="47" lean-forward="true" selection-start-line="111" selection-start-column="47" selection-end-line="111" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -131,6 +120,10 @@
       <find>checkUsername</find>
       <find>flagSend</find>
       <find>os = socket.getOutputStream();</find>
+      <find>MESSAGGITextPane</find>
+      <find>textArea1</find>
+      <find>butt</find>
+      <find>testoMessaggioTextField</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -147,11 +140,11 @@
         <option value="$PROJECT_DIR$/src/login.java" />
         <option value="$PROJECT_DIR$/src/provaserver.java" />
         <option value="$PROJECT_DIR$/src/provaclient.java" />
+        <option value="$PROJECT_DIR$/src/EchoClient.java" />
         <option value="$PROJECT_DIR$/src/chat.form" />
+        <option value="$PROJECT_DIR$/src/chat.java" />
         <option value="$PROJECT_DIR$/src/ThreadedEchoClient.java" />
         <option value="$PROJECT_DIR$/src/ThreadedEchoServer.java" />
-        <option value="$PROJECT_DIR$/src/chat.java" />
-        <option value="$PROJECT_DIR$/src/EchoClient.java" />
       </list>
     </option>
   </component>
@@ -184,6 +177,12 @@
               <item name="DH1Project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="DH1Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DH1Project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="chat" type="e9f4de52:FormNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -193,11 +192,12 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="311" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="296" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551974769902" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551983391649" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="Arquillian JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Arquillian JUnit4" value="" />
     <property name="create.test.in.the.same.root" value="true" />
@@ -292,7 +292,7 @@
       <workItem from="1551883208013" duration="9229000" />
       <workItem from="1551903873025" duration="6708000" />
       <workItem from="1551956488434" duration="3823000" />
-      <workItem from="1551966302031" duration="7951000" />
+      <workItem from="1551966302031" duration="16593000" />
     </task>
     <task id="LOCAL-00001" summary="client">
       <created>1551805989530</created>
@@ -322,17 +322,33 @@
       <option name="project" value="LOCAL" />
       <updated>1551888548676</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="sembra funzionare tutto se usato correttamente, inizio la gui">
+      <created>1551974853609</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1551974853610</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56682000" />
+    <option name="totallyTimeSpent" value="65324000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14697987" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14697987" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -345,7 +361,7 @@
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49395972" weight="0.398017" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
@@ -414,16 +430,6 @@
     <entry file="file://$PROJECT_DIR$/DH1Project.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/lang/String.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/net/SocketInputStream.java" />
     <entry file="file://$PROJECT_DIR$/src/chatTest.java" />
@@ -439,13 +445,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chat.form">
-      <provider selected="true" editor-type-id="ui-designer" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ThreadedEchoServer.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/javax/swing/plaf/basic/BasicButtonListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1268">
-          <caret line="134" selection-start-line="134" selection-end-line="134" />
+        <state relative-caret-position="118">
+          <caret line="251" selection-start-line="251" selection-end-line="251" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/javax/swing/JList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="2325" column="15" selection-start-line="2325" selection-start-column="15" selection-end-line="2325" selection-end-column="15" />
+          <folding>
+            <element signature="e#87881#87882#0" expanded="true" />
+            <element signature="e#87926#87927#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EchoClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -455,7 +483,7 @@
     <entry file="file://$PROJECT_DIR$/src/provaserver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="12" column="59" lean-forward="true" selection-start-line="12" selection-start-column="59" selection-end-line="12" selection-end-column="59" />
+          <caret line="12" column="51" selection-start-line="12" selection-start-column="51" selection-end-line="12" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -469,30 +497,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EchoClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="46" column="15" lean-forward="true" selection-start-column="2" selection-end-line="88" selection-end-column="3" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/chat.form">
+      <provider selected="true" editor-type-id="ui-designer" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/chat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="81" column="57" selection-start-line="81" selection-start-column="57" selection-end-line="81" selection-end-column="57" />
+        <state relative-caret-position="1267">
+          <caret line="106" column="102" selection-start-line="106" selection-start-column="102" selection-end-line="106" selection-end-column="102" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1738#1739#0" expanded="true" />
-            <element signature="e#2715#2950#0" expanded="true" />
-            <element signature="e#2949#2950#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ThreadedEchoClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="43" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="43" />
+        <state relative-caret-position="400">
+          <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ThreadedEchoServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="111" column="47" lean-forward="true" selection-start-line="111" selection-start-column="47" selection-end-line="111" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

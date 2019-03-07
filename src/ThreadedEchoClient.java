@@ -9,13 +9,13 @@ public class ThreadedEchoClient implements Runnable {
     private InputStream is;
     private Reader rd;
     private BufferedReader brd;
-    private JTextPane mexTextPane;
+    private JTextArea mexText;
     private JList list1;
 
 
-    public ThreadedEchoClient(Socket socket, JTextPane MESSAGGITextPane, JList list1) {
+    public ThreadedEchoClient(Socket socket, JTextArea MESSAGGITextArea, JList list1) {
         this.socket = socket;
-        this.mexTextPane = MESSAGGITextPane;
+        this.mexText = MESSAGGITextArea;
         this.list1 = list1;
     }
 
@@ -27,16 +27,17 @@ public class ThreadedEchoClient implements Runnable {
                 rd = new InputStreamReader(is, StandardCharsets.UTF_16);
                 brd = new BufferedReader(rd);
                 String answer = brd.readLine();
-                this.mexTextPane.setText(answer);
                 DefaultListModel model = new DefaultListModel();
                 System.out.println(answer);
                 if (answer.contains("updateuser")) {
                     String[] userOnline = answer.split("-");
-                    model.addElement("LIsta Utenti Online");
+                    model.addElement("Lista Utenti Online");
                     for (int i = 1; i < userOnline.length; i++) {
                         model.addElement(userOnline[i]);
                     }
                     list1.setModel(model);
+                }else{
+                    this.mexText.append("\n "+answer);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

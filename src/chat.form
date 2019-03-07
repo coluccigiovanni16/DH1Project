@@ -31,17 +31,24 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="7ebac" class="javax.swing.JTextPane" binding="MESSAGGITextPane" default-binding="true">
+              <scrollpane id="2b9a">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="4" hsize-policy="4" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="500" height="50"/>
                   </grid>
                 </constraints>
-                <properties>
-                  <editable value="false"/>
-                  <text value="MESSAGGI:"/>
-                </properties>
-              </component>
+                <properties/>
+                <border type="none" title="MESSAGGI"/>
+                <children>
+                  <component id="f86b2" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <editable value="false"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
           <grid id="346a5" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -52,14 +59,23 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="fb9c8" class="javax.swing.JList" binding="list1" default-binding="true">
+              <scrollpane id="fe0eb">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
                   </grid>
                 </constraints>
                 <properties/>
-              </component>
+                <border type="none" title="LISTA UTENTI"/>
+                <children>
+                  <component id="5f975" class="javax.swing.JList" binding="list1" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <model/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
           <component id="970e3" class="javax.swing.JSeparator">

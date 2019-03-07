@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class ThreadedEchoServer implements Runnable {
     public static final int PORT = 7777;
     private HashMap<String, Socket> listUser;
+    private String username;
 
 
     private Socket sock;
@@ -20,13 +21,13 @@ public class ThreadedEchoServer implements Runnable {
 
 
     public void run() {
-        String s = null;
+        String received = null;
         while (true) {
             //sendUpdateListUser();
             BufferedReader brd = null;
             try {
                 brd = new BufferedReader(new InputStreamReader(sock.getInputStream(), StandardCharsets.UTF_16));
-                s = brd.readLine();
+                received = brd.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -37,13 +38,14 @@ public class ThreadedEchoServer implements Runnable {
                 e.printStackTrace();
             }
 //            controlla se l'username è già utilizzato
-            if (s != null) {
-                if (s.contains("<login>")) {
+            if (received != null) {
+                if (received.contains("<LOGIN>")) {
                     //sinc list
                     synchronized (listUser) {
-                        s = s.replace("<login>", "");
-                        if (!listUser.containsKey(s)) {
-                            listUser.put(s, sock);
+                        received = received.replace("<LOGIN>", "");
+                        if (!listUser.containsKey(received)) {
+                            listUser.put(received, sock);
+                            this.username = received;
                             prw.println("ack");
                             prw.flush();
                             sendUpdateListUser();
@@ -52,11 +54,11 @@ public class ThreadedEchoServer implements Runnable {
                             prw.flush();
                         }
                     }
-                } else if (s.contains("<logout>")) {
+                } else if (received.contains("<LOGOUT>")) {
                     //sinc list
                     synchronized (listUser) {
-                        s = s.replace("<logout>", "");
-                        listUser.remove(s);
+                        received = received.replace("<LOGOUT>", "");
+                        listUser.remove(received);
                         sendUpdateListUser();
                         try {
                             sock.close();
@@ -68,26 +70,27 @@ public class ThreadedEchoServer implements Runnable {
                     }
                 } else {
 //                user già connesso
-                    String[] msg = s.split("-");
+                    received = received.replace("<", "").replace(">", "");
+                    String[] msg = received.split("-");
                     synchronized (listUser) {
                         System.out.println(listUser.keySet());
-                        if (msg[0].equalsIgnoreCase("broadcast")) {
+                        if (msg[0].equalsIgnoreCase("BROADCAST")) {
                             for (String user : listUser.keySet()) {
                                 try {
                                     prw = new PrintWriter(new OutputStreamWriter(listUser.get(user).getOutputStream(), StandardCharsets.UTF_16));
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                prw.println(msg[1]);
+                                prw.println(this.username + " : " + msg[2]);
                                 prw.flush();
                             }
-                        } else {
+                        } else if (msg[0].equalsIgnoreCase("ONETOONE")) {
                             try {
-                                prw = new PrintWriter(new OutputStreamWriter(listUser.get(msg[0]).getOutputStream(), StandardCharsets.UTF_16));
-                                prw.println("<OneToOne> " + msg[1]);
+                                prw = new PrintWriter(new OutputStreamWriter(listUser.get(msg[1]).getOutputStream(), StandardCharsets.UTF_16));
+                                prw.println(this.username + "-" + msg[2]);
                                 prw.flush();
                                 prw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream(), StandardCharsets.UTF_16));
-                                prw.println("<OneToOne> " + msg[1]);
+                                prw.println(this.username + "-" + msg[2]);
                                 prw.flush();
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -104,7 +107,9 @@ public class ThreadedEchoServer implements Runnable {
         String users = "updateuser-";
         PrintWriter prw = null;
         for (String user : listUser.keySet()) {
-            users = users + user + "-";
+            if (!user.equalsIgnoreCase(username)) {
+                users = users + user + "-";
+            }
         }
         for (String user : listUser.keySet()) {
             try {

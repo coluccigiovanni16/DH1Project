@@ -11,12 +11,11 @@ import java.nio.charset.StandardCharsets;
 public class chat {
     private JButton submitButton;
     private JTextField testoMessaggioTextField;
-    private JTextPane MESSAGGITextPane;
     private JComboBox comboBox1;
     private JPanel rootPanel;
     private JList list1;
     private JButton LOGOUTButton;
-    private JTextPane listUsers;
+    private JTextArea textArea1;
     public static final int PORT = 7777;
     private String user;
     private Socket socket;
@@ -26,20 +25,15 @@ public class chat {
     private InputStream is;
     private Reader rd;
     private BufferedReader brd;
-    private boolean flagSend;
     private Thread t;
     private JFrame frame;
 
-    public chat() throws IOException {
+    public chat() {
         checkUsername();
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (list1.getSelectedValue().toString().equalsIgnoreCase("one-to-one")) {
-                    sendMassege("<ONETOONE>","<"+list1.getSelectedValue().toString()+">", "<"+testoMessaggioTextField.getText()+">");
-                } else if (list1.getSelectedValue().toString().equalsIgnoreCase("broadcast")) {
-                    sendMassege("<BROADCAST>","<"+user+">", "<"+testoMessaggioTextField.getText()+">");
-                }
+                sendMassege();
             }
         });
         LOGOUTButton.addActionListener(new ActionListener() {
@@ -78,8 +72,7 @@ public class chat {
                     }
                 });
                 frame.setVisible(true);
-                flagSend = true;
-                ThreadedEchoClient client = new ThreadedEchoClient(socket, MESSAGGITextPane, list1);
+                ThreadedEchoClient client = new ThreadedEchoClient(socket,textArea1,list1);
                 t = new Thread(client);
                 t.start();
                 return true;
@@ -95,27 +88,6 @@ public class chat {
         return false;
     }
 
-//    public void receiveMessage() {
-//        String answer = "";
-//        try {
-//            answer = brd.readLine();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        if (answer.contains("updateuser")) {
-//            answer.replace("updateuser-", "");
-//            answer.substring(0, answer.length() - 2);
-//            String[] users = answer.split("-");
-//            DefaultListModel model = new DefaultListModel();
-//            listUsers.setText("UTENTI");
-//            for (String user : users) {
-//                listUsers.setText(listUsers.getText() + "\n" + user);
-//                System.out.println(listUsers.getText());
-//            }
-//        }
-//        System.out.println(answer);
-//    }
-
 
     public void logout() {
         //close connection
@@ -130,9 +102,16 @@ public class chat {
 
     }
 
-    public void sendMassege(String type,String userReceiver, String msg) {
-        prw.println(type+"-"+userReceiver + "-" + msg);
-        prw.flush();
+    public void sendMassege() {
+        if (comboBox1.getSelectedIndex() == 0 && list1.getSelectedIndex() != -1) {
+            prw.println("<ONETOONE>-<" + list1.getSelectedValue().toString() + ">-<" + testoMessaggioTextField.getText() + ">");
+            prw.flush();
+
+        } else if (comboBox1.getSelectedIndex() == 1) {
+            prw.println("<BROADCAST>-<" + user + ">-<" + testoMessaggioTextField.getText() + ">");
+            prw.flush();
+
+        }
     }
 
     public void checkUsername() {
