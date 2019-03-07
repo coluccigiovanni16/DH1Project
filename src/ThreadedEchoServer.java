@@ -18,23 +18,15 @@ public class ThreadedEchoServer implements Runnable {
         System.out.println(s.getInetAddress());
     }
 
-    //    public void open () throws IOException {
-//        ServerSocket serv = new ServerSocket(PORT);
-//        while (true) {
-//            Socket sock = serv.accept();
-//            ThreadedEchoServer server = new ThreadedEchoServer(sock);
-//            Thread t = new Thread(server);
-//            t.start();
-//        }
-//    }
+
     public void run() {
         String s = null;
         while (true) {
             //sendUpdateListUser();
             BufferedReader brd = null;
-                try {
-                    brd = new BufferedReader(new InputStreamReader(sock.getInputStream(), StandardCharsets.UTF_16));
-                    s = brd.readLine();
+            try {
+                brd = new BufferedReader(new InputStreamReader(sock.getInputStream(), StandardCharsets.UTF_16));
+                s = brd.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -48,24 +40,18 @@ public class ThreadedEchoServer implements Runnable {
             if (s != null) {
                 if (s.contains("<login>")) {
                     //sinc list
-                    synchronized (listUser){
-                    s = s.replace("<login>", "");
-                    if (!listUser.containsKey(s)) {
-                        listUser.put(s, sock);
-                        prw.println("ack");
-                        prw.flush();
-                        sendUpdateListUser();
-                    } else {
-                        prw.println("nack");
-                        prw.flush();
-//                        try {
-//                            this.sock.close();
-//                            Thread.currentThread().interrupt();
-//                            return;
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-                    }}
+                    synchronized (listUser) {
+                        s = s.replace("<login>", "");
+                        if (!listUser.containsKey(s)) {
+                            listUser.put(s, sock);
+                            prw.println("ack");
+                            prw.flush();
+                            sendUpdateListUser();
+                        } else {
+                            prw.println("nack");
+                            prw.flush();
+                        }
+                    }
                 } else if (s.contains("<logout>")) {
                     //sinc list
                     synchronized (listUser) {
@@ -83,28 +69,31 @@ public class ThreadedEchoServer implements Runnable {
                 } else {
 //                user già connesso
                     String[] msg = s.split("-");
-                    synchronized (listUser){
+                    synchronized (listUser) {
                         System.out.println(listUser.keySet());
-                    if (msg[0].equalsIgnoreCase("broadcast")) {
-                        for (String user : listUser.keySet()) {
+                        if (msg[0].equalsIgnoreCase("broadcast")) {
+                            for (String user : listUser.keySet()) {
+                                try {
+                                    prw = new PrintWriter(new OutputStreamWriter(listUser.get(user).getOutputStream(), StandardCharsets.UTF_16));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                prw.println(msg[1]);
+                                prw.flush();
+                            }
+                        } else {
                             try {
-                                prw = new PrintWriter(new OutputStreamWriter(listUser.get(user).getOutputStream(), StandardCharsets.UTF_16));
+                                prw = new PrintWriter(new OutputStreamWriter(listUser.get(msg[0]).getOutputStream(), StandardCharsets.UTF_16));
+                                prw.println("<OneToOne> " + msg[1]);
+                                prw.flush();
+                                prw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream(), StandardCharsets.UTF_16));
+                                prw.println("<OneToOne> " + msg[1]);
+                                prw.flush();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            prw.println(msg[1]);
-                            prw.flush();
-                        }
-                    } else {
-                        try {
-                            prw = new PrintWriter(new OutputStreamWriter(listUser.get(msg[0]).getOutputStream(), StandardCharsets.UTF_16));
-                            prw.println(msg[1]);
-                            prw.flush();
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
                     }
-                    System.out.println(s);}
                 }
 
             }
@@ -112,10 +101,10 @@ public class ThreadedEchoServer implements Runnable {
     }
 
     private void sendUpdateListUser() {
-        String users="updateuser-";
-        PrintWriter prw =null;
+        String users = "updateuser-";
+        PrintWriter prw = null;
         for (String user : listUser.keySet()) {
-            users=users+user+"-";
+            users = users + user + "-";
         }
         for (String user : listUser.keySet()) {
             try {
@@ -128,12 +117,5 @@ public class ThreadedEchoServer implements Runnable {
         }
         System.out.println(users);
     }
-//        finally {
-//            try {
-//                sock.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
 }
 
