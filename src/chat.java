@@ -1,8 +1,5 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -46,7 +43,7 @@ public class chat {
 
     public boolean login() {
         try {
-            this.socket = new Socket("localhost", 7777);
+            this.socket = new Socket("localhost", PORT);
             //apro un canale e mando un messaggio al server
             os = socket.getOutputStream();
             wr = new OutputStreamWriter(os, StandardCharsets.UTF_16);
@@ -59,11 +56,18 @@ public class chat {
             String answer = brd.readLine();
             System.out.println(answer);
             if (answer.equalsIgnoreCase("ack")) {
-                System.out.println("utente " + user + " aggiunto");
+//                System.out.println("utente " + user + " aggiunto");
                 frame = new JFrame("CHAT");
                 frame.setContentPane(rootPanel);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.pack();
+                testoMessaggioTextField.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        testoMessaggioTextField.setText("");
+                    }
+                });
+
                 frame.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosing(WindowEvent we) {
@@ -72,14 +76,15 @@ public class chat {
                     }
                 });
                 frame.setVisible(true);
-                ThreadedEchoClient client = new ThreadedEchoClient(socket,textArea1,list1);
+                ThreadedEchoClient client = new ThreadedEchoClient(socket, textArea1, list1, this.user);
                 t = new Thread(client);
                 t.start();
+                textArea1.setText("SERVER: Ciao " + this.user + " benvenuto nella chat :-)");
                 return true;
                 //autenticazione effettuata aprire nuovo panel con interfaccia per chattare
             } else if (answer.equalsIgnoreCase("nack")) {
                 //stampa "nome utente già utilizzato"
-                System.out.println("utente " + user + " non aggiunto");
+//                System.out.println("utente " + user + " non aggiunto");
                 socket.close();
             }
         } catch (IOException e) {
@@ -96,6 +101,7 @@ public class chat {
             prw.flush();
             t.stop();
             socket.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

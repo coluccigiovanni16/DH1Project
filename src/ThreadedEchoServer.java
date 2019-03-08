@@ -81,7 +81,7 @@ public class ThreadedEchoServer implements Runnable {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                prw.println(this.username + " : " + msg[2]);
+                                prw.println(this.username + "-" + msg[2]);
                                 prw.flush();
                             }
                         } else if (msg[0].equalsIgnoreCase("ONETOONE")) {
@@ -107,9 +107,7 @@ public class ThreadedEchoServer implements Runnable {
         String users = "updateuser-";
         PrintWriter prw = null;
         for (String user : listUser.keySet()) {
-            if (!user.equalsIgnoreCase(username)) {
                 users = users + user + "-";
-            }
         }
         for (String user : listUser.keySet()) {
             try {

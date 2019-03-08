@@ -11,12 +11,14 @@ public class ThreadedEchoClient implements Runnable {
     private BufferedReader brd;
     private JTextArea mexText;
     private JList list1;
+    private String myUsername;
 
 
-    public ThreadedEchoClient(Socket socket, JTextArea MESSAGGITextArea, JList list1) {
+    public ThreadedEchoClient(Socket socket, JTextArea MESSAGGITextArea, JList list1, String myUsername) {
         this.socket = socket;
         this.mexText = MESSAGGITextArea;
         this.list1 = list1;
+        this.myUsername=myUsername;
     }
 
     @Override
@@ -33,11 +35,15 @@ public class ThreadedEchoClient implements Runnable {
                     String[] userOnline = answer.split("-");
                     model.addElement("Lista Utenti Online");
                     for (int i = 1; i < userOnline.length; i++) {
-                        model.addElement(userOnline[i]);
+                        if (!userOnline[i].equalsIgnoreCase(this.myUsername)) {
+                            model.addElement(userOnline[i]);
+                        }
+
                     }
                     list1.setModel(model);
-                }else{
-                    this.mexText.append("\n "+answer);
+                } else {
+                    String [] messageToPrint=answer.split("-");
+                    this.mexText.append("\n " + messageToPrint[0]+" : "+messageToPrint[1]);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
