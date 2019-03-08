@@ -59,7 +59,6 @@ public class chat {
 //                System.out.println("utente " + user + " aggiunto");
                 frame = new JFrame("CHAT");
                 frame.setContentPane(rootPanel);
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.pack();
                 testoMessaggioTextField.addMouseListener(new MouseAdapter() {
                     @Override
@@ -67,11 +66,10 @@ public class chat {
                         testoMessaggioTextField.setText("");
                     }
                 });
-
+                frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                 frame.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosing(WindowEvent we) {
-                        System.out.println();
+                    public void windowClosing(WindowEvent e) {
                         logout();
                     }
                 });
@@ -96,16 +94,24 @@ public class chat {
 
     public void logout() {
         //close connection
-        try {
-            prw.println("<LOGOUT>" + user);
-            prw.flush();
-            t.stop();
-            socket.close();
+        int option = JOptionPane.showConfirmDialog(
+                frame,
+                "Are you sure you want to close the application?",
+                "Close Confirmation",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (option == JOptionPane.YES_OPTION) {
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                prw.println("<LOGOUT>" + user);
+                prw.flush();
+                t.stop();
+                socket.close();
+                frame.dispose();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     public void sendMassege() {
