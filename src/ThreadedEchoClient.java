@@ -30,10 +30,9 @@ public class ThreadedEchoClient implements Runnable {
                 brd = new BufferedReader(rd);
                 String answer = brd.readLine();
                 DefaultListModel model = new DefaultListModel();
-                System.out.println(answer);
+//                System.out.println(answer);
                 if (answer.contains("updateuser")) {
                     String[] userOnline = answer.split("-");
-                    model.addElement("Lista Utenti Online");
                     for (int i = 1; i < userOnline.length; i++) {
                         if (!userOnline[i].equalsIgnoreCase(this.myUsername)) {
                             model.addElement(userOnline[i]);

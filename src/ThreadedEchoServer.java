@@ -13,10 +13,10 @@ public class ThreadedEchoServer implements Runnable {
     private Socket sock;
 
     public ThreadedEchoServer(Socket s, HashMap users) {
-        System.out.println("nuova richiesta");
+//        System.out.println("nuova richiesta");
         this.sock = s;
         listUser = users;
-        System.out.println(s.getInetAddress());
+//        System.out.println(s.getInetAddress());
     }
 
 
@@ -73,7 +73,7 @@ public class ThreadedEchoServer implements Runnable {
                     received = received.replace("<", "").replace(">", "");
                     String[] msg = received.split("-");
                     synchronized (listUser) {
-                        System.out.println(listUser.keySet());
+//                        System.out.println(listUser.keySet());
                         if (msg[0].equalsIgnoreCase("BROADCAST")) {
                             for (String user : listUser.keySet()) {
                                 try {
@@ -118,7 +118,7 @@ public class ThreadedEchoServer implements Runnable {
             prw.println(users);
             prw.flush();
         }
-        System.out.println(users);
+//        System.out.println(users);
     }
 }
 

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
 
@@ -24,6 +25,7 @@ public class chat {
     private BufferedReader brd;
     private Thread t;
     private JFrame frame;
+    private String IpServer = "localhost";
 
     public chat() {
         checkUsername();
@@ -43,7 +45,7 @@ public class chat {
 
     public boolean login() {
         try {
-            this.socket = new Socket("localhost", PORT);
+            this.socket = new Socket(IpServer, PORT);
             //apro un canale e mando un messaggio al server
             os = socket.getOutputStream();
             wr = new OutputStreamWriter(os, StandardCharsets.UTF_16);
@@ -54,7 +56,7 @@ public class chat {
             rd = new InputStreamReader(is, StandardCharsets.UTF_16);
             brd = new BufferedReader(rd);
             String answer = brd.readLine();
-            System.out.println(answer);
+//            System.out.println(answer);
             if (answer.equalsIgnoreCase("ack")) {
 //                System.out.println("utente " + user + " aggiunto");
                 frame = new JFrame("CHAT");
@@ -84,6 +86,7 @@ public class chat {
                 //stampa "nome utente già utilizzato"
 //                System.out.println("utente " + user + " non aggiunto");
                 socket.close();
+                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -130,28 +133,65 @@ public class chat {
 
     public void checkUsername() {
         boolean userValid = false;
-        while (!userValid) {
+        boolean ipvalid = false;
+        while (!userValid || !ipvalid) {
             JLabel label_login = new JLabel("Inserisci username:");
             JTextField login = new JTextField();
+            JLabel label_ip = new JLabel("Inserisci ip del server");
+            JTextField ip = new JTextField();
+            ip.setText("localhost");
 
-            Object[] array = {label_login, login};
+            Object[] array = {label_login, login, label_ip, ip};
             int res = JOptionPane.showConfirmDialog(null, array, "Login",
                     JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
 
-            if (res == JOptionPane.OK_OPTION && login.getText().trim() != null) {
-                System.out.println("username: " + login.getText().trim());
+            if (res == JOptionPane.OK_OPTION && !login.getText().trim().equals("") && !ip.getText().equals("") && login.getText().trim() != null && ip.getText().trim() != null) {
+//                System.out.println("username: " + login.getText().trim());
+//                System.out.println("ip: " + ip.getText().trim());
                 this.user = login.getText().trim();
-                userValid = login();
-                if (!userValid) {
-                    label_login = new JLabel("Username già in uso riprova.....:");
-                    array = new Object[]{label_login, login};
+                this.IpServer = ip.getText();
+                ipvalid = checkIP(IpServer);
+                if (ipvalid) {
+                    userValid = login();
+
+                    if (!userValid) {
+                        label_login = new JLabel("Username già in uso riprova.....:");
+                        array = new Object[]{label_login, login, label_ip, ip};
+                        res = JOptionPane.showConfirmDialog(null, array, "Login",
+                                JOptionPane.OK_CANCEL_OPTION,
+                                JOptionPane.PLAIN_MESSAGE);
+                    }
+                }
+                if (!ipvalid) {
+                    label_ip = new JLabel("Server non trovato,inserisci nuovo ip giusto.....:");
+                    array = new Object[]{label_login, login, label_ip, ip};
                     res = JOptionPane.showConfirmDialog(null, array, "Login",
                             JOptionPane.OK_CANCEL_OPTION,
                             JOptionPane.PLAIN_MESSAGE);
                 }
+
+
             }
         }
 
+    }
+
+    private boolean checkIP(String ipToCheck) {
+        boolean ipchecked = false;
+        try {
+            Socket check = new Socket(ipToCheck, PORT);
+            check.setSoTimeout(500);
+            if (check.isConnected()) {
+                ipchecked = true;
+                check.close();
+            }
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ipchecked;
     }
 }
