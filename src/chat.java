@@ -115,14 +115,16 @@ public class chat {
     }
 
     public void sendMassege() {
-        if (comboBox1.getSelectedIndex() == 0 && list1.getSelectedIndex() != -1) {
-            prw.println("<ONETOONE>-<" + list1.getSelectedValue().toString() + ">-<" + testoMessaggioTextField.getText() + ">");
-            prw.flush();
+        if (!testoMessaggioTextField.getText().equals("")) {
+            if (comboBox1.getSelectedIndex() == 0 && list1.getSelectedIndex() != -1) {
+                prw.println("<ONETOONE>-<" + list1.getSelectedValue().toString() + ">-<" + testoMessaggioTextField.getText() + ">");
+                prw.flush();
 
-        } else if (comboBox1.getSelectedIndex() == 1) {
-            prw.println("<BROADCAST>-<" + user + ">-<" + testoMessaggioTextField.getText() + ">");
-            prw.flush();
+            } else if (comboBox1.getSelectedIndex() == 1) {
+                prw.println("<BROADCAST>-<" + user + ">-<" + testoMessaggioTextField.getText() + ">");
+                prw.flush();
 
+            }
         }
     }
 
