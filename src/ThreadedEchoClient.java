@@ -18,7 +18,7 @@ public class ThreadedEchoClient implements Runnable {
         this.socket = socket;
         this.mexText = MESSAGGITextArea;
         this.list1 = list1;
-        this.myUsername=myUsername;
+        this.myUsername = myUsername;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ThreadedEchoClient implements Runnable {
                 String answer = brd.readLine();
                 DefaultListModel model = new DefaultListModel();
 //                System.out.println(answer);
-                if (answer.contains("updateuser")) {
+                if (answer != null && answer.contains("updateuser")) {
                     String[] userOnline = answer.split("-");
                     for (int i = 1; i < userOnline.length; i++) {
                         if (!userOnline[i].equalsIgnoreCase(this.myUsername)) {
@@ -41,8 +41,8 @@ public class ThreadedEchoClient implements Runnable {
                     }
                     list1.setModel(model);
                 } else {
-                    String [] messageToPrint=answer.split("-");
-                    this.mexText.append("\n " + messageToPrint[0]+" : "+messageToPrint[1]);
+                    String[] messageToPrint = answer.split("-");
+                    this.mexText.append("\n " + messageToPrint[0] + " : " + messageToPrint[1]);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
