@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
 
 public class chat {
+    public static final int PORT = 7777;
     private JButton submitButton;
     private JTextField testoMessaggioTextField;
     private JComboBox comboBox1;
@@ -14,7 +14,6 @@ public class chat {
     private JList list1;
     private JButton LOGOUTButton;
     private JTextArea textArea1;
-    public static final int PORT = 7777;
     private String user;
     private Socket socket;
     private OutputStream os;
@@ -26,8 +25,10 @@ public class chat {
     private Thread t;
     private JFrame frame;
     private String IpServer = "localhost";
+    private ThreadedEchoClient client;
 
-    public chat() {
+    public chat() throws IOException {
+        this.socket = new Socket(IpServer, PORT);
         checkUsername();
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -38,27 +39,28 @@ public class chat {
         LOGOUTButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                logout();
+                try {
+                    logout();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
     }
 
     public boolean login() {
         try {
-            this.socket = new Socket(IpServer, PORT);
             //apro un canale e mando un messaggio al server
-            os = socket.getOutputStream();
+            os = this.socket.getOutputStream();
             wr = new OutputStreamWriter(os, StandardCharsets.UTF_16);
             prw = new PrintWriter(wr);
             prw.println("<LOGIN>" + user);
             prw.flush();
-            is = socket.getInputStream();
+            is = this.socket.getInputStream();
             rd = new InputStreamReader(is, StandardCharsets.UTF_16);
             brd = new BufferedReader(rd);
             String answer = brd.readLine();
-//            System.out.println(answer);
             if (answer.equalsIgnoreCase("ack")) {
-//                System.out.println("utente " + user + " aggiunto");
                 frame = new JFrame("CHAT");
                 frame.setContentPane(rootPanel);
                 frame.pack();
@@ -72,11 +74,15 @@ public class chat {
                 frame.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosing(WindowEvent e) {
-                        logout();
+                        try {
+                            logout();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 });
                 frame.setVisible(true);
-                ThreadedEchoClient client = new ThreadedEchoClient(socket, textArea1, list1, this.user);
+                client = new ThreadedEchoClient(this.socket, textArea1, list1, this.user);
                 t = new Thread(client);
                 t.start();
                 textArea1.setText("SERVER: Ciao " + this.user + " benvenuto nella chat :-)");
@@ -85,7 +91,6 @@ public class chat {
             } else if (answer.equalsIgnoreCase("nack")) {
                 //stampa "nome utente già utilizzato"
 //                System.out.println("utente " + user + " non aggiunto");
-                socket.close();
                 return false;
             }
         } catch (IOException e) {
@@ -95,7 +100,7 @@ public class chat {
     }
 
 
-    public void logout() {
+    public void logout() throws IOException {
         //close connection
         int option = JOptionPane.showConfirmDialog(
                 frame,
@@ -104,16 +109,13 @@ public class chat {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
         if (option == JOptionPane.YES_OPTION) {
-
-            try {
-                prw.println("<LOGOUT>" + user);
-                prw.flush();
-                t.stop();
-                socket.close();
-                frame.dispose();
-            } catch (IOException e) {
-                e.printStackTrace();
+            prw.println("<LOGOUT>" + user);
+            prw.flush();
+            frame.dispose();
+            if (this.socket != null) {
+                this.socket.close();
             }
+            client.stop();
         }
     }
 
@@ -135,31 +137,29 @@ public class chat {
         boolean userValid = false;
         boolean ipvalid = false;
         while (!userValid || !ipvalid) {
+            userValid = false;
+            ipvalid = false;
             JLabel label_login = new JLabel("Inserisci username:");
             JTextField login = new JTextField();
             JLabel label_ip = new JLabel("Inserisci ip del server");
             JTextField ip = new JTextField();
             ip.setText("localhost");
-
             Object[] array = {label_login, login, label_ip, ip};
             int res = JOptionPane.showConfirmDialog(null, array, "Login",
                     JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
-
             if (res == JOptionPane.OK_OPTION && !login.getText().trim().equals("") && !ip.getText().equals("") && login.getText().trim() != null && ip.getText().trim() != null) {
-//                System.out.println("username: " + login.getText().trim());
-//                System.out.println("ip: " + ip.getText().trim());
-                this.user = login.getText().trim();
-                this.IpServer = ip.getText();
-                ipvalid = checkIP(IpServer);
+                String userTemp = login.getText().trim();
+                String ipTemp = ip.getText();
+                ipvalid = true;
                 if (ipvalid) {
+                    this.user = userTemp;
                     userValid = login();
-
                     if (!userValid) {
-                        JOptionPane.showMessageDialog(null,"User gia in uso");
+                        JOptionPane.showMessageDialog(null, "User gia in uso");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null,"Ip errato o server Offline");
+                    JOptionPane.showMessageDialog(null, "Ip errato o server Offline");
                 }
 
 
@@ -168,21 +168,4 @@ public class chat {
 
     }
 
-    private boolean checkIP(String ipToCheck) {
-        boolean ipchecked = false;
-        try {
-            Socket check = new Socket(ipToCheck, PORT);
-            check.setSoTimeout(500);
-            if (check.isConnected()) {
-                ipchecked = true;
-                check.close();
-            }
-
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ipchecked;
-    }
 }

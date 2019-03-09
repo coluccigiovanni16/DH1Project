@@ -1,13 +1,19 @@
+import com.sun.media.jfxmedia.logging.Logger;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 
 public class ThreadedEchoServer implements Runnable {
     public static final int PORT = 7777;
     private HashMap<String, Socket> listUser;
     private String username;
+    private boolean connectionOK;
+    private BufferedReader brd;
+    private PrintWriter prw;
 
 
     private Socket sock;
@@ -16,15 +22,15 @@ public class ThreadedEchoServer implements Runnable {
 //        System.out.println("nuova richiesta");
         this.sock = s;
         listUser = users;
+        this.connectionOK = true;
 //        System.out.println(s.getInetAddress());
     }
 
 
     public void run() {
         String received = null;
-        while (true) {
+        while (connectionOK) {
             //sendUpdateListUser();
-            BufferedReader brd = null;
             try {
                 brd = new BufferedReader(new InputStreamReader(sock.getInputStream(), StandardCharsets.UTF_16));
                 received = brd.readLine();
@@ -44,7 +50,7 @@ public class ThreadedEchoServer implements Runnable {
                     synchronized (listUser) {
                         received = received.replace("<LOGIN>", "");
                         if (!listUser.containsKey(received)) {
-                            listUser.put(received, sock);
+                            listUser.put(received, this.sock);
                             this.username = received;
                             prw.println("ack");
                             prw.flush();
@@ -60,37 +66,31 @@ public class ThreadedEchoServer implements Runnable {
                         received = received.replace("<LOGOUT>", "");
                         listUser.remove(received);
                         sendUpdateListUser();
-                        try {
-                            sock.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        Thread.currentThread().interrupt();
-                        return;
+                        stop();
                     }
                 } else {
 //                user già connesso
                     received = received.replace("<", "").replace(">", "");
-                    String[] msg = received.split("-");
+                    String[] mexFromUser = received.split("-");
                     synchronized (listUser) {
 //                        System.out.println(listUser.keySet());
-                        if (msg[0].equalsIgnoreCase("BROADCAST")) {
+                        if (mexFromUser[0].equalsIgnoreCase("BROADCAST")) {
                             for (String user : listUser.keySet()) {
                                 try {
                                     prw = new PrintWriter(new OutputStreamWriter(listUser.get(user).getOutputStream(), StandardCharsets.UTF_16));
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                prw.println(this.username + "-" + msg[2]);
+                                prw.println(this.username + "-" + mexFromUser[2]);
                                 prw.flush();
                             }
-                        } else if (msg[0].equalsIgnoreCase("ONETOONE")) {
+                        } else if (mexFromUser[0].equalsIgnoreCase("ONETOONE")) {
                             try {
-                                prw = new PrintWriter(new OutputStreamWriter(listUser.get(msg[1]).getOutputStream(), StandardCharsets.UTF_16));
-                                prw.println(this.username + "-" + msg[2]);
+                                prw = new PrintWriter(new OutputStreamWriter(listUser.get(mexFromUser[1]).getOutputStream(), StandardCharsets.UTF_16));
+                                prw.println(this.username + "-" + mexFromUser[2]);
                                 prw.flush();
                                 prw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream(), StandardCharsets.UTF_16));
-                                prw.println(this.username + "-" + msg[2]);
+                                prw.println(this.username + "-" + mexFromUser[2]);
                                 prw.flush();
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -103,20 +103,45 @@ public class ThreadedEchoServer implements Runnable {
         }
     }
 
-    private void sendUpdateListUser() {
-        String users = "updateuser-";
-        PrintWriter prw = null;
-        for (String user : listUser.keySet()) {
-                users = users + user + "-";
-        }
-        for (String user : listUser.keySet()) {
-            try {
-                prw = new PrintWriter(new OutputStreamWriter(listUser.get(user).getOutputStream(), StandardCharsets.UTF_16));
-            } catch (IOException e) {
-                e.printStackTrace();
+    public void stop() {
+        // Thread will end safely
+        connectionOK = false;
+        // Close client connection
+        closeConnection();
+    }
+
+    private void closeConnection() {
+        try {
+            if (prw != null) {
+                prw.print("CONNECTION_TERMINATED");
+                prw.close();
             }
-            prw.println(users);
-            prw.flush();
+            if (brd != null) {
+                brd.close();
+            }
+        } catch (Exception e) {
+            Logger.logMsg(Level.WARNING.intValue(), e.getMessage());
+        }
+
+    }
+
+
+    private void sendUpdateListUser() {
+        String users = "<UPDATEUSERLIST>-";
+        PrintWriter prw = null;
+        synchronized (listUser) {
+            for (String user : listUser.keySet()) {
+                users = users + "-" + user;
+            }
+            for (String user : listUser.keySet()) {
+                try {
+                    prw = new PrintWriter(new OutputStreamWriter(listUser.get(user).getOutputStream(), StandardCharsets.UTF_16));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                prw.println(users);
+                prw.flush();
+            }
         }
 //        System.out.println(users);
     }
