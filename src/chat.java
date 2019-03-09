@@ -1,8 +1,11 @@
+import com.sun.media.jfxmedia.logging.Logger;
+
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
 
 
 public class chat {
@@ -26,6 +29,7 @@ public class chat {
     private JFrame frame;
     private String IpServer = "localhost";
     private ThreadedEchoClient client;
+
 
     public chat() throws IOException {
         this.socket = new Socket(IpServer, PORT);
@@ -115,8 +119,24 @@ public class chat {
             if (this.socket != null) {
                 this.socket.close();
             }
+            closeConnection();
             client.stop();
         }
+    }
+
+    private void closeConnection() {
+        try {
+            if (prw != null) {
+                prw.print("CONNECTION_TERMINATED");
+                prw.close();
+            }
+            if (brd != null) {
+                brd.close();
+            }
+        } catch (Exception e) {
+            Logger.logMsg(Level.WARNING.intValue(), e.getMessage());
+        }
+
     }
 
     public void sendMassege() {
