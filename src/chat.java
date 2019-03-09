@@ -156,19 +156,10 @@ public class chat {
                     userValid = login();
 
                     if (!userValid) {
-                        label_login = new JLabel("Username già in uso riprova.....:");
-                        array = new Object[]{label_login, login, label_ip, ip};
-                        res = JOptionPane.showConfirmDialog(null, array, "Login",
-                                JOptionPane.OK_CANCEL_OPTION,
-                                JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null,"User gia in uso");
                     }
-                }
-                if (!ipvalid) {
-                    label_ip = new JLabel("Server non trovato,inserisci nuovo ip giusto.....:");
-                    array = new Object[]{label_login, login, label_ip, ip};
-                    res = JOptionPane.showConfirmDialog(null, array, "Login",
-                            JOptionPane.OK_CANCEL_OPTION,
-                            JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null,"Ip errato o server Offline");
                 }
 
 
