@@ -17,6 +17,7 @@ public class chat {
     private JList list1;
     private JButton LOGOUTButton;
     private JTextArea textArea1;
+    private JLabel usernameLabel;
     private String user;
     private Socket socket;
     private OutputStream os;
@@ -86,6 +87,7 @@ public class chat {
                     }
                 });
                 frame.setVisible(true);
+                usernameLabel.setText("USERNAME : " + this.user);
                 client = new ThreadedEchoClient(this.socket, textArea1, list1, this.user);
                 t = new Thread(client);
                 t.start();
