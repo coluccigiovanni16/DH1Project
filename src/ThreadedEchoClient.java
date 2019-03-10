@@ -3,6 +3,7 @@ import com.sun.media.jfxmedia.logging.Logger;
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 
@@ -28,10 +29,17 @@ public class ThreadedEchoClient implements Runnable {
 
     @Override
     public void run() {
-        while (connectionOK && !this.socket.isClosed()) {
+        while (connectionOK) {
             try {
                 brd = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_16));
-                String answer = brd.readLine();
+                String answer = null;
+                try {
+                    answer=brd.readLine();
+                } catch (SocketException e) {
+                    stop();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 DefaultListModel model = new DefaultListModel();
                 if (answer != null) {
                     String[] receivedFromServer = answer.split("-");
@@ -46,6 +54,13 @@ public class ThreadedEchoClient implements Runnable {
                         this.mexText.append("\n " + receivedFromServer[0] + " : " + receivedFromServer[1]);
                     }
                 }
+            } catch (SocketException e) {
+                try {
+                    stop();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -53,9 +68,10 @@ public class ThreadedEchoClient implements Runnable {
 
     }
 
-    public void stop() {
+    public void stop() throws IOException {
         // Thread will end safely
         connectionOK = false;
+        this.socket.close();
         // Close client connection
         closeConnection();
     }

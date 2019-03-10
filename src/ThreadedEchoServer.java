@@ -2,6 +2,7 @@ import com.sun.media.jfxmedia.logging.Logger;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -14,8 +15,6 @@ public class ThreadedEchoServer implements Runnable {
     private boolean connectionOK;
     private BufferedReader brd;
     private PrintWriter prw;
-
-
     private Socket sock;
 
     public ThreadedEchoServer(Socket s, HashMap users) {
@@ -29,11 +28,13 @@ public class ThreadedEchoServer implements Runnable {
 
     public void run() {
         String received = null;
-        while (connectionOK) {
+        while (connectionOK && this.sock.isConnected()) {
             //sendUpdateListUser();
             try {
                 brd = new BufferedReader(new InputStreamReader(sock.getInputStream(), StandardCharsets.UTF_16));
                 received = brd.readLine();
+            } catch (SocketException e) {
+                stop();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -45,27 +46,36 @@ public class ThreadedEchoServer implements Runnable {
             }
 //            controlla se l'username è già utilizzato
             if (received != null) {
-                if (received.contains("<LOGIN>")) {
+                if (received.split("-")[0].equals("<LOGIN>")) {
                     //sinc list
                     synchronized (listUser) {
-                        received = received.replace("<LOGIN>", "");
+                        received = received.split("-")[1];
                         if (!listUser.containsKey(received)) {
                             listUser.put(received, this.sock);
                             this.username = received;
-                            prw.println("ack");
+                            prw.println("<ACK>");
                             prw.flush();
-                            sendUpdateListUser();
+
                         } else {
-                            prw.println("nack");
+                            prw.println("<NACK>");
                             prw.flush();
                         }
+                        try {
+                            sendUpdateListUser();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } else if (received.contains("<LOGOUT>")) {
+                } else if (received.split("-")[0].equals("<LOGOUT>")) {
                     //sinc list
                     synchronized (listUser) {
-                        received = received.replace("<LOGOUT>", "");
+                        received = received.split("-")[1];
                         listUser.remove(received);
-                        sendUpdateListUser();
+                        try {
+                            sendUpdateListUser();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         stop();
                     }
                 } else {
@@ -106,6 +116,11 @@ public class ThreadedEchoServer implements Runnable {
     public void stop() {
         // Thread will end safely
         connectionOK = false;
+        try {
+            this.sock.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // Close client connection
         closeConnection();
     }
@@ -126,8 +141,9 @@ public class ThreadedEchoServer implements Runnable {
     }
 
 
-    private void sendUpdateListUser() {
-        String users = "<UPDATEUSERLIST>-";
+    private void sendUpdateListUser() throws InterruptedException {
+        Thread.sleep(10);
+        String users = "<UPDATEUSERLIST>";
         PrintWriter prw = null;
         synchronized (listUser) {
             for (String user : listUser.keySet()) {

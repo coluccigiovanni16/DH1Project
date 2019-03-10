@@ -58,13 +58,13 @@ public class chat {
             os = this.socket.getOutputStream();
             wr = new OutputStreamWriter(os, StandardCharsets.UTF_16);
             prw = new PrintWriter(wr);
-            prw.println("<LOGIN>" + user);
+            prw.println("<LOGIN>-" + this.user);
             prw.flush();
             is = this.socket.getInputStream();
             rd = new InputStreamReader(is, StandardCharsets.UTF_16);
             brd = new BufferedReader(rd);
             String answer = brd.readLine();
-            if (answer.equalsIgnoreCase("ack")) {
+            if (answer.equals("<ACK>")) {
                 frame = new JFrame("CHAT");
                 frame.setContentPane(rootPanel);
                 frame.pack();
@@ -92,7 +92,7 @@ public class chat {
                 textArea1.setText("SERVER: Ciao " + this.user + " benvenuto nella chat :-)");
                 return true;
                 //autenticazione effettuata aprire nuovo panel con interfaccia per chattare
-            } else if (answer.equalsIgnoreCase("nack")) {
+            } else if (answer.equals("<NACK>")) {
                 //stampa "nome utente già utilizzato"
 //                System.out.println("utente " + user + " non aggiunto");
                 return false;
@@ -113,7 +113,7 @@ public class chat {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
         if (option == JOptionPane.YES_OPTION) {
-            prw.println("<LOGOUT>" + user);
+            prw.println("<LOGOUT>-" + user);
             prw.flush();
             frame.dispose();
             if (this.socket != null) {
@@ -170,7 +170,7 @@ public class chat {
                     JOptionPane.PLAIN_MESSAGE);
             if (res == JOptionPane.OK_OPTION && !login.getText().trim().equals("") && !ip.getText().equals("") && login.getText().trim() != null && ip.getText().trim() != null) {
                 String userTemp = login.getText().trim();
-                String ipTemp = ip.getText();
+                this.IpServer = ip.getText();
                 ipvalid = true;
                 if (ipvalid) {
                     this.user = userTemp;
