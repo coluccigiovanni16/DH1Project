@@ -109,19 +109,14 @@ public class ThreadedEchoServer implements Runnable {
     public void stop() {
         // Thread will end safely
         this.connectionOK = false;
-        // Close client connection
-        try {
-            if (this.prw != null) {
-                this.prw.close();
+        if (!this.socket.isClosed()){
+            try {
+                this.socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            if (this.brd != null) {
-                this.brd.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-
+        // Close client connection
     }
 
 

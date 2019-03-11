@@ -76,5 +76,26 @@ public class ThreadedEchoClient implements Runnable {
         // Thread will end safely
         this.connectionOK = false;
         // Close client connection
+        closeConnection();
     }
+
+    /**
+     *
+     */
+    private void closeConnection() {
+        try {
+            if (this.brd != null) {
+                this.brd.close();
+            }
+            if (!this.socket.isClosed()) {
+                this.socket.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }
