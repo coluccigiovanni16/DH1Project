@@ -3,7 +3,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 
 public class ThreadedEchoClient implements Runnable {
@@ -46,10 +45,8 @@ public class ThreadedEchoClient implements Runnable {
             String answer = null;
             try {
                 answer = brd.readLine();
-            } catch (SocketException e) {
-                stop();
             } catch (IOException e) {
-                e.printStackTrace();
+                stop();
             }
             DefaultListModel model = new DefaultListModel();
             if (answer != null) {
@@ -72,7 +69,7 @@ public class ThreadedEchoClient implements Runnable {
     }
 
     /**
-     *Metodo richiamato per fermare il ciclo continuo del suddetto Thread,
+     * Metodo richiamato per fermare il ciclo continuo del suddetto Thread,
      * richiamata in caso di eccezione legata alla comunicazione.
      * Agisce settando a false la variabile connectionOK e chiudendo eventualmente la socket richiamanto il metodo closeConnection().
      */
@@ -84,7 +81,7 @@ public class ThreadedEchoClient implements Runnable {
     }
 
     /**
-     *Metodo utilizzato per chiudere il canale
+     * Metodo utilizzato per chiudere il canale
      */
     private void closeConnection() {
         try {

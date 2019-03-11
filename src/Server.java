@@ -12,12 +12,12 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
 //        Ciclo continuo in attesa di richieste di comunicazione dai client
-        ServerSocket serverSocket = new ServerSocket(PORT);
+        ServerSocket serverSocket = new ServerSocket( PORT );
         HashMap<String, Socket> listUser = new HashMap<>();
         while (true) {
             Socket socket = serverSocket.accept();
-            ThreadedEchoServer server = new ThreadedEchoServer(socket, listUser);
-            Thread t = new Thread(server);
+            ThreadedEchoServer server = new ThreadedEchoServer( socket, listUser );
+            Thread t = new Thread( server );
             t.start();
         }
     }

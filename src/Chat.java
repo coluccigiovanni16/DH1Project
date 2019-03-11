@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -36,27 +35,28 @@ public class Chat {
      */
     public Chat() throws IOException {
         checkUsername();
-        this.submitButton.addActionListener( e -> sendMassege() );
+        this.submitButton.addActionListener( e -> sendMessege() );
         this.messageToSend.addKeyListener( new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    sendMassege();
+                    sendMessege();
                 }
             }
 
         } );
         this.LOGOUTButton.addActionListener( e -> {
-            try {
-                logout();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            logout();
         } );
     }
 
+    public static void main(String[] args) throws IOException {
+        new Chat();
+    }
+
     /**
-     * @return
+     * @return Ritorna un booleano che rappresenta la rieuscita o meno del login, controllando
+     * la disponibilità dell'username utilizzato
      */
     public boolean login() {
         try {
@@ -83,11 +83,7 @@ public class Chat {
                 this.frame.addWindowListener( new WindowAdapter() {
                     @Override
                     public void windowClosing(WindowEvent e) {
-                        try {
-                            logout();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+                        logout();
                     }
                 } );
                 this.frame.setVisible( true );
@@ -106,12 +102,13 @@ public class Chat {
         return false;
     }
 
-
     /**
-     * @throws IOException
+     * @throws IOException in caso di problemi di comunicazione
+     *                     Viene richiamato in caso di riechiesta di chiusura della chat da parte dell'utente.
+     *                     Sia attraverso il pulsante LOGOUT nella GUI sia attraverso il classico metodo di uscita('X' nella finestra).
+     *                     Avvia una piccola finestra di conferma
      */
-    public void logout() throws IOException {
-        //close connection
+    public void logout() {
         int option = JOptionPane.showConfirmDialog(
                 this.frame,
                 "Sicuro di voler uscire dalla chat?",
@@ -127,6 +124,9 @@ public class Chat {
         }
     }
 
+    /**
+     * Metodo utilizzato per chiudere il canale
+     */
     private void closeConnection() {
         try {
             if (this.prw != null) {
@@ -141,7 +141,10 @@ public class Chat {
 
     }
 
-    public void sendMassege() {
+    /**
+     * Metodo utilizzato per inviare messaggi al client, siano essi onetoone o broadcast(scelta effetuata attravrso controlli sulla GUI)
+     */
+    public void sendMessege() {
         if (!this.messageToSend.getText().equals( "" )) {
             if (this.comboBox1.getSelectedIndex() == 0 && this.list1.getSelectedIndex() != -1) {
                 this.prw.println( "<ONETOONE>-<" + this.list1.getSelectedValue().toString() + ">-<" + this.messageToSend.getText() + ">" );
@@ -155,6 +158,12 @@ public class Chat {
         }
     }
 
+    /**
+     * @throws IOException in caso di errori di comunicazione
+     *                     Metodo chaiamto alla creazione di un oggetto di tipo chat,esegue un controllo sia sull'username sia sull'indirizzo ip,
+     *                     scelti dall'utente attraverso l'interfaccia grafica, in caso di ip o user non validi notifica all'utente il problema
+     *                     e richarica la GUI di scelta
+     */
     public void checkUsername() throws IOException {
         boolean userValid = false;
         boolean ipvalid = false;
@@ -173,8 +182,8 @@ public class Chat {
             if (res == JOptionPane.OK_OPTION && !login.getText().trim().equals( "" ) && !ip.getText().equals( "" ) && login.getText().trim() != null && ip.getText().trim() != null) {
                 String userTemp = login.getText().trim();
                 this.IpServer = ip.getText();
-                InetAddress address = InetAddress.getByName(this.IpServer);
-                ipvalid=address.isReachable( 1000 );
+                InetAddress address = InetAddress.getByName( this.IpServer );
+                ipvalid = address.isReachable( 1000 );
                 if (ipvalid) {
                     if (this.socket == null) {
                         this.socket = new Socket( this.IpServer, this.PORT );
@@ -196,10 +205,6 @@ public class Chat {
             }
         }
 
-    }
-
-    public static void main(String[] args) throws IOException {
-        new Chat();
     }
 
 }
