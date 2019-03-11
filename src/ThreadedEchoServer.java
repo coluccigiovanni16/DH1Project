@@ -66,7 +66,9 @@ public class ThreadedEchoServer implements Runnable {
                         stop();
                     }
                 } else if (received.equals( "<UPDATEUSERLIST>" )) {
-                    sendUpdateListUser();
+                    synchronized (this.listUser) {
+                        sendUpdateListUser();
+                    }
 
                 } else {
                     received = received.replace( "<", "" ).replace( ">", "" );
@@ -108,17 +110,7 @@ public class ThreadedEchoServer implements Runnable {
         // Thread will end safely
         this.connectionOK = false;
         // Close client connection
-        closeConnection();
-    }
-
-    /**
-     *
-     */
-    private void closeConnection() {
         try {
-            if(!this.socket.isConnected()){
-                this.socket.close();
-            }
             if (this.prw != null) {
                 this.prw.close();
             }
@@ -129,6 +121,7 @@ public class ThreadedEchoServer implements Runnable {
             e.printStackTrace();
         }
 
+
     }
 
 
@@ -137,19 +130,17 @@ public class ThreadedEchoServer implements Runnable {
      */
     private void sendUpdateListUser() {
         String users = "<UPDATEUSERLIST>";
-        synchronized (listUser) {
-            for (String user : this.listUser.keySet()) {
-                users = users + "-" + user;
+        for (String user : this.listUser.keySet()) {
+            users = users + "-" + user;
+        }
+        for (String user : this.listUser.keySet()) {
+            try {
+                this.prw = new PrintWriter( new OutputStreamWriter( this.listUser.get( user ).getOutputStream(), StandardCharsets.UTF_16 ) );
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            for (String user : this.listUser.keySet()) {
-                try {
-                    this.prw = new PrintWriter( new OutputStreamWriter( this.listUser.get( user ).getOutputStream(), StandardCharsets.UTF_16 ) );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                this.prw.println( users );
-                this.prw.flush();
-            }
+            this.prw.println( users );
+            this.prw.flush();
         }
     }
 }

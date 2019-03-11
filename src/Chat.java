@@ -122,9 +122,6 @@ public class Chat {
             this.prw.println( "<LOGOUT>-" + this.user );
             this.prw.flush();
             this.frame.dispose();
-            if (this.socket != null) {
-                this.socket.close();
-            }
             closeConnection();
             client.stop();
         }
@@ -177,7 +174,7 @@ public class Chat {
                 String userTemp = login.getText().trim();
                 this.IpServer = ip.getText();
                 InetAddress address = InetAddress.getByName(this.IpServer);
-                ipvalid=address.isReachable( 100 );
+                ipvalid=address.isReachable( 1000 );
                 if (ipvalid) {
                     if (this.socket == null) {
                         this.socket = new Socket( this.IpServer, this.PORT );
