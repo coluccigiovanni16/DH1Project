@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
@@ -175,7 +176,7 @@ public class Chat {
             if (res == JOptionPane.OK_OPTION && !login.getText().trim().equals( "" ) && !ip.getText().equals( "" ) && login.getText().trim() != null && ip.getText().trim() != null) {
                 String userTemp = login.getText().trim();
                 this.IpServer = ip.getText();
-                Inet4Address address = (Inet4Address) Inet4Address.getByName( IpServer );
+                InetAddress address = InetAddress.getByName(this.IpServer);
                 ipvalid=address.isReachable( 100 );
                 if (ipvalid) {
                     if (this.socket == null) {

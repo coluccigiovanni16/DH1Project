@@ -8,16 +8,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b15f69b3-ada9-44bf-be79-d992a481d0e3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ThreadedEchoClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ThreadedEchoClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ThreadedEchoServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ThreadedEchoServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chat.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/provaclient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/provaclient1.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/provaclient2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/provaclient3.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/provaclient4.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/provaserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,15 +40,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Chat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="179" column="27" selection-start-line="179" selection-start-column="27" selection-end-line="179" selection-end-column="27" />
+            <state relative-caret-position="216">
+              <caret line="178" column="65" selection-start-line="178" selection-start-column="65" selection-end-line="178" selection-end-column="65" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2393#2605#0" expanded="true" />
-                <element signature="e#2604#2605#0" expanded="true" />
-                <element signature="e#2733#3082#0" expanded="true" />
-                <element signature="e#3081#3082#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/net/InetAddress.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="1074" column="30" selection-start-line="1074" selection-start-column="30" selection-end-line="1074" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -78,7 +75,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ThreadedEchoServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-277">
+            <state relative-caret-position="1785">
               <caret line="108" column="13" selection-start-line="108" selection-start-column="13" selection-end-line="108" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -90,7 +87,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ThreadedEchoClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-459">
+            <state>
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -161,7 +158,7 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="950" />
     <option name="y" value="515" />
-    <option name="width" value="979" />
+    <option name="width" value="980" />
     <option name="height" value="525" />
   </component>
   <component name="ProjectView">
@@ -169,8 +166,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -208,12 +205,16 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="dh1project" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="311" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="296" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552318338728" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552325747604" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="Arquillian JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Arquillian JUnit4" value="" />
     <property name="create.test.in.the.same.root" value="true" />
@@ -247,7 +248,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Chat">
+  <component name="RunManager" selected="Application.Server">
     <configuration name="Chat" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Chat" />
       <module name="DH1Project" />
@@ -268,8 +269,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Chat" />
         <item itemvalue="Application.Server" />
+        <item itemvalue="Application.Chat" />
       </list>
     </recent_temporary>
   </component>
@@ -303,7 +304,8 @@
       <workItem from="1552132603277" duration="4767000" />
       <workItem from="1552145067310" duration="8416000" />
       <workItem from="1552250596009" duration="4551000" />
-      <workItem from="1552311078930" duration="6265000" />
+      <workItem from="1552311078930" duration="6396000" />
+      <workItem from="1552322716841" duration="525000" />
     </task>
     <task id="LOCAL-00001" summary="client">
       <created>1551805989530</created>
@@ -417,11 +419,18 @@
       <option name="project" value="LOCAL" />
       <updated>1552313743486</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="da commentare">
+      <created>1552318382250</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1552318382250</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111058000" />
+    <option name="totallyTimeSpent" value="111714000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -436,7 +445,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1409396" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14295302" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -445,8 +454,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49328858" weight="0.20679887" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49395972" visible="true" weight="0.29745042" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49328858" visible="true" weight="0.20679887" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49395972" weight="0.29745042" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -516,14 +525,15 @@
     <MESSAGE value="fixati bug ora faccio reformacting del codice" />
     <MESSAGE value="fixati bug ora faccio reformacting del codice,, &#10;aggiunta chiusura finestra login che prima andava in loop fino alla connessione" />
     <MESSAGE value="grafica ok ora correzione codice" />
-    <option name="LAST_COMMIT_MESSAGE" value="grafica ok ora correzione codice" />
+    <MESSAGE value="da commentare" />
+    <option name="LAST_COMMIT_MESSAGE" value="da commentare" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Chat.java</url>
-          <line>159</line>
+          <line>160</line>
           <properties class="Chat" method="checkUsername">
             <option name="EMULATED" value="true" />
           </properties>
@@ -628,34 +638,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/provaclient4.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/provaclient1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/provaclient2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/provaclient3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="63" selection-start-line="3" selection-start-column="63" selection-end-line="3" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/provaclient4.java" />
+    <entry file="file://$PROJECT_DIR$/src/provaclient1.java" />
+    <entry file="file://$PROJECT_DIR$/src/provaclient2.java" />
+    <entry file="file://$PROJECT_DIR$/src/provaclient3.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/net/SocketException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -670,16 +656,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/provaclient.java">
+    <entry file="file://$PROJECT_DIR$/src/provaclient.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/net/Inet4Address.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        <state relative-caret-position="687">
+          <caret line="121" column="45" selection-start-line="121" selection-start-column="38" selection-end-line="121" selection-end-column="45" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Chat.form">
+      <provider selected="true" editor-type-id="ui-designer" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ThreadedEchoServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-277">
+        <state relative-caret-position="1785">
           <caret line="108" column="13" selection-start-line="108" selection-start-column="13" selection-end-line="108" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -689,27 +679,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ThreadedEchoClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-459">
+        <state>
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Chat.form">
-      <provider selected="true" editor-type-id="ui-designer" />
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/net/Inet4Address.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="687">
-          <caret line="121" column="45" selection-start-line="121" selection-start-column="38" selection-end-line="121" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/net/InetAddress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-333">
-          <caret line="460" column="19" selection-start-line="460" selection-start-column="19" selection-end-line="460" selection-end-column="19" />
+        <state relative-caret-position="175">
+          <caret line="1074" column="30" selection-start-line="1074" selection-start-column="30" selection-end-line="1074" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -722,14 +702,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Chat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="179" column="27" selection-start-line="179" selection-start-column="27" selection-end-line="179" selection-end-column="27" />
+        <state relative-caret-position="216">
+          <caret line="178" column="65" selection-start-line="178" selection-start-column="65" selection-end-line="178" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2393#2605#0" expanded="true" />
-            <element signature="e#2604#2605#0" expanded="true" />
-            <element signature="e#2733#3082#0" expanded="true" />
-            <element signature="e#3081#3082#0" expanded="true" />
           </folding>
         </state>
       </provider>
