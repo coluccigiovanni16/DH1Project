@@ -19,7 +19,7 @@ public class chat {
     private JTextArea textArea1;
     private JLabel usernameLabel;
     private String user;
-    private Socket socket;
+    private Socket socket=null;
     private OutputStream os;
     private Writer wr;
     private PrintWriter prw;
@@ -33,7 +33,6 @@ public class chat {
 
 
     public chat() throws IOException {
-        this.socket = new Socket(IpServer, PORT);
         checkUsername();
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -92,6 +91,8 @@ public class chat {
                 t = new Thread(client);
                 t.start();
                 textArea1.setText("SERVER: Ciao " + this.user + " benvenuto nella chat :-)");
+                prw.println("<UPDATEUSERLIST>");
+                prw.flush();
                 return true;
                 //autenticazione effettuata aprire nuovo panel con interfaccia per chattare
             } else if (answer.equals("<NACK>")) {
@@ -155,7 +156,7 @@ public class chat {
         }
     }
 
-    public void checkUsername() {
+    public void checkUsername() throws IOException {
         boolean userValid = false;
         boolean ipvalid = false;
         while (!userValid || !ipvalid) {
@@ -173,6 +174,9 @@ public class chat {
             if (res == JOptionPane.OK_OPTION && !login.getText().trim().equals("") && !ip.getText().equals("") && login.getText().trim() != null && ip.getText().trim() != null) {
                 String userTemp = login.getText().trim();
                 this.IpServer = ip.getText();
+                if (this.socket == null) {
+                    this.socket = new Socket(IpServer, PORT);
+                }
                 ipvalid = true;
                 if (ipvalid) {
                     this.user = userTemp;

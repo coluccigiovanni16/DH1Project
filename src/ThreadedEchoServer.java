@@ -78,6 +78,14 @@ public class ThreadedEchoServer implements Runnable {
                         }
                         stop();
                     }
+                } else if (received.equals("<UPDATEUSERLIST>")) {
+                    //sinc list
+                    try {
+                        sendUpdateListUser();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                 } else {
 //                user già connesso
                     received = received.replace("<", "").replace(">", "");
@@ -108,10 +116,10 @@ public class ThreadedEchoServer implements Runnable {
                         }
                     }
                 }
-
             }
         }
     }
+
 
     public void stop() {
         // Thread will end safely
