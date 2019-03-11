@@ -34,22 +34,29 @@ public class chat {
 
     public chat() throws IOException {
         checkUsername();
-        submitButton.addActionListener(new ActionListener() {
+        submitButton.addActionListener(e -> sendMassege());
+        testoMessaggioTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                sendMassege();
-            }
-        });
-        LOGOUTButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    logout();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    sendMassege();
                 }
             }
+
         });
+        LOGOUTButton.addActionListener(e -> {
+            try {
+                logout();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            sendMassege();
+        }
     }
 
     public boolean login() {

@@ -34,7 +34,7 @@ public class ThreadedEchoClient implements Runnable {
                 brd = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_16));
                 String answer = null;
                 try {
-                    answer=brd.readLine();
+                    answer = brd.readLine();
                 } catch (SocketException e) {
                     stop();
                 } catch (IOException e) {
@@ -51,7 +51,9 @@ public class ThreadedEchoClient implements Runnable {
                         }
                         list1.setModel(model);
                     } else {
-                        this.mexText.append("\n " + receivedFromServer[0] + " : " + receivedFromServer[1]);
+                        this.mexText.append("\n " + answer);
+                        this.mexText.setCaretPosition(this.mexText.getDocument().getLength());
+
                     }
                 }
             } catch (SocketException e) {

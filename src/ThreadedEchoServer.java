@@ -99,16 +99,16 @@ public class ThreadedEchoServer implements Runnable {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                prw.println(this.username + "-" + mexFromUser[2]);
+                                prw.println("<BROADCAST> "+this.username + " : " + mexFromUser[2]);
                                 prw.flush();
                             }
                         } else if (mexFromUser[0].equalsIgnoreCase("ONETOONE")) {
                             try {
                                 prw = new PrintWriter(new OutputStreamWriter(listUser.get(mexFromUser[1]).getOutputStream(), StandardCharsets.UTF_16));
-                                prw.println(this.username + "-" + mexFromUser[2]);
+                                prw.println("<ONETOONE> "+this.username + " : " + mexFromUser[2]);
                                 prw.flush();
                                 prw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream(), StandardCharsets.UTF_16));
-                                prw.println(this.username + "-" + mexFromUser[2]);
+                                prw.println("<ONETOONE> "+this.username + " : " + mexFromUser[2]);
                                 prw.flush();
                             } catch (IOException e) {
                                 e.printStackTrace();
