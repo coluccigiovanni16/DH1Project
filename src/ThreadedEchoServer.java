@@ -13,8 +13,8 @@ public class ThreadedEchoServer implements Runnable {
     private Socket socket;
 
     /**
-     * @param s
-     * @param users
+     * @param s socket in collegamento con il client
+     * @param users mappa degli user online compresa di socket
      */
     public ThreadedEchoServer(Socket s, HashMap users) {
         this.socket = s;
@@ -23,6 +23,10 @@ public class ThreadedEchoServer implements Runnable {
     }
 
 
+    /**
+     * Ciclo continuo lato server che rimane in ascolto di un possibile messaggio in arrivo dal client a cui è 'collegato',
+     * il ciclo si ferma se la connessione viene fermata o se il canale si interrompe
+     */
     public void run() {
         String received = null;
         while (connectionOK && this.socket.isConnected()) {
@@ -104,7 +108,9 @@ public class ThreadedEchoServer implements Runnable {
 
 
     /**
-     *
+     *Metodo richiamato per fermare il ciclo continuo del suddetto Thread,
+     * richiamata in caso di logout o di eccezione legata alla comunicazione.
+     * Agisce settando a false la variabile connectionOK e chiudendo eventualmente la socket
      */
     public void stop() {
         // Thread will end safely
@@ -121,7 +127,8 @@ public class ThreadedEchoServer implements Runnable {
 
 
     /**
-     *
+     *Invia un messagio a tutti gli user online(grazie alla mappa listUser) in un preciso formato,
+     * grazie al quale possono aggiornare la lista degli user ancora online con cui è possibile chattare
      */
     private void sendUpdateListUser() {
         String users = "<UPDATEUSERLIST>";

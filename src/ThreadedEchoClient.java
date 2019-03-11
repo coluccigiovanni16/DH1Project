@@ -17,10 +17,10 @@ public class ThreadedEchoClient implements Runnable {
 
 
     /**
-     * @param socket
-     * @param MESSAGGITextArea
-     * @param list1
-     * @param myUsername
+     * @param socket           socket che caratterizza il canale tra client e server
+     * @param MESSAGGITextArea campo della GUI in cui sono mostrati i messaggi ricevuti
+     * @param list1            campo della GUI in cui viene mostrata la lista degli utenti ancora connessi
+     * @param myUsername       username dell'utente a cui è legata la socket
      */
     public ThreadedEchoClient(Socket socket, JTextArea MESSAGGITextArea, JList list1, String myUsername) {
         this.socket = socket;
@@ -36,7 +36,9 @@ public class ThreadedEchoClient implements Runnable {
     }
 
     /**
-     *
+     * Ciclo continuo lato server che rimane in ascolto di un possibile messaggio in arrivo dal server a cui è 'collegato',
+     * il ciclo si ferma se la connessione viene fermata o se il canale si interrompe;
+     * i messaggi possono provenire da altri utenti o mandati dal server per aggiornare la lista utenti
      */
     @Override
     public void run() {
@@ -70,7 +72,9 @@ public class ThreadedEchoClient implements Runnable {
     }
 
     /**
-     *
+     *Metodo richiamato per fermare il ciclo continuo del suddetto Thread,
+     * richiamata in caso di eccezione legata alla comunicazione.
+     * Agisce settando a false la variabile connectionOK e chiudendo eventualmente la socket richiamanto il metodo closeConnection().
      */
     public void stop() {
         // Thread will end safely
@@ -80,7 +84,7 @@ public class ThreadedEchoClient implements Runnable {
     }
 
     /**
-     *
+     *Metodo utilizzato per chiudere il canale
      */
     private void closeConnection() {
         try {
