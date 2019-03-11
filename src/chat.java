@@ -19,7 +19,7 @@ public class chat {
     private JTextArea textArea1;
     private JLabel usernameLabel;
     private String user;
-    private Socket socket=null;
+    private Socket socket = null;
     private OutputStream os;
     private Writer wr;
     private PrintWriter prw;
@@ -188,6 +188,12 @@ public class chat {
                     JOptionPane.showMessageDialog(null, "Ip errato o server Offline");
                 }
 
+
+            } else if (res == JOptionPane.CANCEL_OPTION || res == JOptionPane.CLOSED_OPTION) {
+                if (this.socket != null) {
+                    this.socket.close();
+                }
+                System.exit(1);
 
             }
         }
